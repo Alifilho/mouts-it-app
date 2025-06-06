@@ -1,16 +1,36 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
 import { FlatCompat } from "@eslint/eslintrc";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import prettier from "eslint-plugin-prettier/recommended";
+import react from "eslint-plugin-react";
+import reactHooks from "eslint-plugin-react-hooks";
+import sonarjs from "eslint-plugin-sonarjs";
+import unicorn from "eslint-plugin-unicorn";
 
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
+  baseDirectory: import.meta.dirname,
 });
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  sonarjs.configs["recommended"],
+  unicorn.configs["recommended"],
+  {
+    files: ["**/*.{js,jsx}"],
+    plugins: { "react-hooks": reactHooks },
+  },
+  {
+    files: ["**/*.{js,mjs,cjs,jsx,mjsx,ts,tsx,mtsx}"],
+    ...react.configs.flat.recommended,
+  },
+  ...compat.config({
+    extends: ["next/core-web-vitals", "next/typescript"],
+  }),
+  prettier,
+  {
+    rules: {
+      "sonarjs/todo-tag": "off",
+      "func-style": ["error", "declaration", { allowArrowFunctions: false }],
+      "unicorn/prevent-abbreviations": "off",
+    },
+  },
 ];
 
 export default eslintConfig;
