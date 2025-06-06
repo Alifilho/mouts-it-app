@@ -29,6 +29,14 @@ const eslintConfig = [
       "sonarjs/todo-tag": "off",
       "func-style": ["error", "declaration", { allowArrowFunctions: false }],
       "unicorn/prevent-abbreviations": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          caughtErrorsIgnorePattern: "^_",
+        },
+      ],
     },
   },
 ];

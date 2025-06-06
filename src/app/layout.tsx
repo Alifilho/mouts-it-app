@@ -1,17 +1,11 @@
+import { theme } from "@/lib/theme";
+import { QueryProvider } from "@/providers/query";
+import { SnackbarProvider } from "@/providers/snackbar";
+import { ThemeProvider } from "@mui/material";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import type { Metadata } from "next";
-import { Roboto, Roboto_Mono } from "next/font/google";
 import { ReactNode } from "react";
 import "./globals.css";
-
-const robotoSans = Roboto({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const robotoMono = Roboto_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Mouts IT App",
@@ -20,13 +14,17 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: ReactNode;
-}>) {
+}: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${robotoSans.variable} ${robotoMono.variable}`}>
-        {children}
+      <body>
+        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+          <ThemeProvider theme={theme}>
+            <QueryProvider>
+              <SnackbarProvider>{children}</SnackbarProvider>
+            </QueryProvider>
+          </ThemeProvider>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );
