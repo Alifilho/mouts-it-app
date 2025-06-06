@@ -1,8 +1,6 @@
-"use server";
-
 import { Box, CircularProgress, Typography } from "@mui/material";
 
-export async function Loading() {
+export function Loading() {
   return (
     <Box
       sx={{
@@ -14,7 +12,7 @@ export async function Loading() {
       }}
     >
       <CircularProgress size={60} thickness={4} />
-      <Typography variant="h6" sx={{ mt: 1 }}>
+      <Typography variant="h6" sx={{ mt: 2 }}>
         Loading...
       </Typography>
     </Box>

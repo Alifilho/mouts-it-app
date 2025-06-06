@@ -61,16 +61,14 @@ export default function SignIn() {
         component="form"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <Typography variant="h5" mt={2}>
-          Sign in
-        </Typography>
+        <Typography variant="h5">Sign in</Typography>
         <Input
           control={control}
           name="email"
           type="email"
           placeholder="email@mouts.com"
           required
-          sx={{ marginTop: 2 }}
+          sx={{ marginTop: 3 }}
           label="Email"
         />
         <Input
