@@ -61,3 +61,36 @@ export async function DELETE(
 
   return NextResponse.json({ message: "User deleted successfully" });
 }
+
+export async function PUT(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { accessToken } = await getSession();
+  if (!accessToken) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  const { id } = await params;
+
+  const body = await request.json();
+
+  const res = await fetch(`${process.env.BASE_URL}/users/${id}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    const { message, statusCode } = data as ApiErrorResponse;
+
+    return new Response(message, { status: statusCode });
+  }
+
+  return NextResponse.json(data);
+}

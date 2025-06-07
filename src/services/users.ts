@@ -71,18 +71,41 @@ export async function deleteUser(id: string) {
 }
 
 export async function createUser(
-  user: Omit<User, "id" | "createdAt" | "updatedAt">,
+  form: Omit<User, "id" | "createdAt" | "updatedAt">,
 ) {
   const res = await fetch(`/api/users`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user),
+    body: JSON.stringify(form),
   });
 
   if (!res.ok) {
     const message = await res.text();
 
     throw new Error(message || "Error creating user");
+  }
+
+  const data = await res.json();
+
+  return data as User;
+}
+
+type UpdateUserParams = {
+  id: string;
+  form: Partial<Omit<User, "id" | "createdAt" | "updatedAt">>;
+};
+
+export async function updateUser({ id, form }: UpdateUserParams) {
+  const res = await fetch(`/api/users/${id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(form),
+  });
+
+  if (!res.ok) {
+    const message = await res.text();
+
+    throw new Error(message || "Error updating user");
   }
 
   const data = await res.json();
