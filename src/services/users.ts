@@ -56,3 +56,16 @@ export async function getUser(id: string) {
 
   return data as User;
 }
+
+export async function deleteUser(id: string) {
+  const res = await fetch(`/api/users/${id}`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+  });
+
+  if (!res.ok) {
+    const message = await res.text();
+
+    throw new Error(message || "Error deleting user");
+  }
+}
