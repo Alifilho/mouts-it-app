@@ -69,3 +69,23 @@ export async function deleteUser(id: string) {
     throw new Error(message || "Error deleting user");
   }
 }
+
+export async function createUser(
+  user: Omit<User, "id" | "createdAt" | "updatedAt">,
+) {
+  const res = await fetch(`/api/users`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(user),
+  });
+
+  if (!res.ok) {
+    const message = await res.text();
+
+    throw new Error(message || "Error creating user");
+  }
+
+  const data = await res.json();
+
+  return data as User;
+}

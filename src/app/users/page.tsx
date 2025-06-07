@@ -2,9 +2,10 @@
 
 import { Loading } from "@/components/loading";
 import { getUsers, User } from "@/services/users";
-import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
+import { Add, CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 import {
   Box,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -20,6 +21,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -52,9 +54,17 @@ export default function UsersList() {
           sx={{
             bgcolor: theme.palette.primary.main,
             color: theme.palette.primary.contrastText,
+            justifyContent: "space-between",
           }}
         >
           <Typography variant="h6">Users</Typography>
+          <IconButton
+            LinkComponent={NextLink}
+            href="/users/new"
+            color="inherit"
+          >
+            <Add />
+          </IconButton>
         </Toolbar>
         <TableContainer>
           <Table>

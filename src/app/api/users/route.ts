@@ -26,3 +26,31 @@ export async function GET() {
 
   return NextResponse.json(data);
 }
+
+export async function POST(request: Request) {
+  const { accessToken } = await getSession();
+  if (!accessToken) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
+  const user = await request.json();
+
+  const res = await fetch(`${process.env.BASE_URL}/users`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(user),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    const { message, statusCode } = data as ApiErrorResponse;
+
+    return new Response(message, { status: statusCode });
+  }
+
+  return NextResponse.json(data);
+}
