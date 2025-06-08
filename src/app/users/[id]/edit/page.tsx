@@ -2,7 +2,8 @@
 
 import { Loading } from "@/components/loading";
 import { useSnackbar } from "@/hooks/use-snackbar";
-import { getUser, updateUser, User } from "@/services/users";
+import { api } from "@/lib/api";
+import { User } from "@/lib/types";
 import { Box, Link, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import NextLink from "next/link";
@@ -22,21 +23,21 @@ export default function EditUser() {
   const { id } = useParams();
   const { data, isLoading } = useQuery({
     queryKey: ["user", id],
-    queryFn: async () => getUser(id as string),
+    queryFn: async () => api<User>(`/users/${id}`, { method: "GET" }),
   });
-  const { mutate, isPending } = useMutation({ mutationFn: updateUser });
+  const { mutate, isPending } = useMutation({
+    mutationFn: (body: FormValues) =>
+      api<User>(`users/${id}`, { method: "PUT", body }),
+  });
 
   async function onSubmit(form: FormValues) {
-    mutate(
-      { id: id as string, form },
-      {
-        onError: (error: Error) => snackBar.showSnack(error.message, "error"),
-        onSuccess: (newUser: User) => {
-          snackBar.showSnack("User edited successfully!", "success");
-          router.push(`/users/${newUser.id}`);
-        },
+    mutate(form, {
+      onError: (error: Error) => snackBar.showSnack(error.message, "error"),
+      onSuccess: (newUser: User) => {
+        snackBar.showSnack("User edited successfully!", "success");
+        router.push(`/users/${newUser.id}`);
       },
-    );
+    });
   }
 
   if (isPending || isLoading || !data) {

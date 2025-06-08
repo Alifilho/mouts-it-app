@@ -1,11 +1,11 @@
 import { getSession } from "@/lib/session";
-import { ApiErrorResponse } from "@/types/api";
+import { ApiErrorResponse } from "@/lib/types";
 import { NextResponse } from "next/server";
 
 export async function GET() {
   const { accessToken } = await getSession();
   if (!accessToken) {
-    return new Response("Unauthorized", { status: 401 });
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   const res = await fetch(`${process.env.BASE_URL}/users`, {
@@ -21,7 +21,7 @@ export async function GET() {
   if (!res.ok) {
     const { message, statusCode } = data as ApiErrorResponse;
 
-    return new Response(message, { status: statusCode });
+    return NextResponse.json({ message }, { status: statusCode });
   }
 
   return NextResponse.json(data);
@@ -30,7 +30,7 @@ export async function GET() {
 export async function POST(request: Request) {
   const { accessToken } = await getSession();
   if (!accessToken) {
-    return new Response("Unauthorized", { status: 401 });
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   const user = await request.json();
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
   if (!res.ok) {
     const { message, statusCode } = data as ApiErrorResponse;
 
-    return new Response(message, { status: statusCode });
+    return NextResponse.json({ message }, { status: statusCode });
   }
 
   return NextResponse.json(data);

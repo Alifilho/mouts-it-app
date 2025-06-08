@@ -3,7 +3,7 @@
 import { Input } from "@/components/input";
 import { Loading } from "@/components/loading";
 import { useSnackbar } from "@/hooks/use-snackbar";
-import { signIn } from "@/services/auth";
+import { api } from "@/lib/api";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import {
   Box,
@@ -24,7 +24,10 @@ export default function SignIn() {
   const router = useRouter();
   const snackBar = useSnackbar();
   const { control, handleSubmit } = useForm<FormValues>();
-  const { mutate, isPending } = useMutation({ mutationFn: signIn });
+  const { mutate, isPending } = useMutation({
+    mutationFn: (body: FormValues) =>
+      api("auth/sign-in", { method: "POST", body, noAuth: true }),
+  });
 
   const [showPassword, setShowPassword] = useState(false);
 

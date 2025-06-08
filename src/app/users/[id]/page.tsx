@@ -2,7 +2,8 @@
 
 import { Loading } from "@/components/loading";
 import { useSnackbar } from "@/hooks/use-snackbar";
-import { deleteUser, getUser } from "@/services/users";
+import { api } from "@/lib/api";
+import { User } from "@/lib/types";
 import { CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 import {
   Box,
@@ -33,9 +34,11 @@ export default function UserDetail() {
 
   const { data, isLoading } = useQuery({
     queryKey: ["user", id],
-    queryFn: async () => getUser(id as string),
+    queryFn: async () => api<User>(`users/${id}`, { method: "GET" }),
   });
-  const { mutate, isPending } = useMutation({ mutationFn: deleteUser });
+  const { mutate, isPending } = useMutation({
+    mutationFn: (id: string) => api(`users/${id}`, { method: "DELETE" }),
+  });
 
   if (isLoading || isPending || !data) {
     return <Loading />;

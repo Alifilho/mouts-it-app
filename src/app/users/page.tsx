@@ -1,7 +1,8 @@
 "use client";
 
 import { Loading } from "@/components/loading";
-import { getUsers, User } from "@/services/users";
+import { api } from "@/lib/api";
+import { ApiResponse, User } from "@/lib/types";
 import { Add, CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 import {
   Box,
@@ -36,7 +37,16 @@ export default function UsersList() {
 
   const { data, isLoading } = useQuery({
     queryKey: ["users", page, take, sortBy, order],
-    queryFn: () => getUsers({ page, take, sortBy, order }),
+    queryFn: () =>
+      api<ApiResponse<User>>("users", {
+        method: "GET",
+        params: {
+          page: String(page),
+          take: String(take),
+          sortBy: String(sortBy),
+          order,
+        },
+      }),
   });
 
   function onRedirectToDetail(userId: number) {

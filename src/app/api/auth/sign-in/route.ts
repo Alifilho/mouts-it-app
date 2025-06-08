@@ -1,5 +1,6 @@
 import { setSession } from "@/lib/session";
-import { ApiErrorResponse } from "@/types/api";
+import { ApiErrorResponse } from "@/lib/types";
+import { NextResponse } from "next/server";
 
 type SignSuccessResponse = { accessToken: string };
 
@@ -16,12 +17,12 @@ export async function POST(request: Request) {
   if (!res.ok) {
     const { message, statusCode } = data as ApiErrorResponse;
 
-    return new Response(message, { status: statusCode });
+    return NextResponse.json({ message }, { status: statusCode });
   }
 
   const { accessToken } = data as SignSuccessResponse;
 
   await setSession(accessToken);
 
-  return new Response("Ok!", { status: 200 });
+  return NextResponse.json({ message: "Sign in successful!" }, { status: 200 });
 }

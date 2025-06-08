@@ -1,5 +1,5 @@
 import { getSession } from "@/lib/session";
-import { ApiErrorResponse } from "@/types/api";
+import { ApiErrorResponse } from "@/lib/types";
 import { NextResponse } from "next/server";
 
 export async function GET(
@@ -8,7 +8,7 @@ export async function GET(
 ) {
   const { accessToken } = await getSession();
   if (!accessToken) {
-    return new Response("Unauthorized", { status: 401 });
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   const { id } = await params;
@@ -26,7 +26,7 @@ export async function GET(
   if (!res.ok) {
     const { message, statusCode } = data as ApiErrorResponse;
 
-    return new Response(message, { status: statusCode });
+    return NextResponse.json({ message }, { status: statusCode });
   }
 
   return NextResponse.json(data);
@@ -38,7 +38,7 @@ export async function DELETE(
 ) {
   const { accessToken } = await getSession();
   if (!accessToken) {
-    return new Response("Unauthorized", { status: 401 });
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   const { id } = await params;
@@ -56,7 +56,7 @@ export async function DELETE(
   if (!res.ok) {
     const { message, statusCode } = data as ApiErrorResponse;
 
-    return new Response(message, { status: statusCode });
+    return NextResponse.json({ message }, { status: statusCode });
   }
 
   return NextResponse.json({ message: "User deleted successfully" });
@@ -68,7 +68,7 @@ export async function PUT(
 ) {
   const { accessToken } = await getSession();
   if (!accessToken) {
-    return new Response("Unauthorized", { status: 401 });
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   const { id } = await params;
@@ -89,7 +89,7 @@ export async function PUT(
   if (!res.ok) {
     const { message, statusCode } = data as ApiErrorResponse;
 
-    return new Response(message, { status: statusCode });
+    return NextResponse.json({ message }, { status: statusCode });
   }
 
   return NextResponse.json(data);

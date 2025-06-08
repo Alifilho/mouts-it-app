@@ -10,13 +10,7 @@ const roboto = Roboto({
 });
 
 export const theme = createTheme({
-  palette: {
-    mode: "light",
-    // mode: "dark",
-    // mode: process.env.NODE_ENV === 'production' ? 'light' : 'dark',
-  },
-  typography: {
-    fontFamily: roboto.style.fontFamily,
-  },
+  palette: { mode: "light" },
+  typography: { fontFamily: roboto.style.fontFamily },
   components: {},
 });

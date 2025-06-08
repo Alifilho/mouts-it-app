@@ -1,3 +1,12 @@
+export type User = {
+  id: number;
+  name: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+  isActive: boolean;
+};
+
 export type ApiErrorResponse = {
   message: string;
   statusCode: number;
