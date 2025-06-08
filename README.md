@@ -45,7 +45,7 @@ npm run dev
 
 ## API Reference
 
-The complete API reference is automatically generated with Swagger and available at `http://localhost:3001/docs`. Use this interactive UI to explore endpoints, view request/response schemas, and try out calls directly.
+The complete API reference is automatically generated with Swagger and available at `http://localhost:3001/docs` (in API project). Use this interactive UI to explore endpoints, view request/response schemas, and try out calls directly.
 
 ## Default Credentials
 In API by default, the user is:  
