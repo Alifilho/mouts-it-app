@@ -14,7 +14,7 @@
 
 1. Clone the repo  
    ```bash
-   git clone <your-repo-url> && cd mouts-it-app
+   git clone https://github.com/Alifilho/mouts-it-app && cd mouts-it-app
    ```  
 2. Install dependencies  
    ```bash
