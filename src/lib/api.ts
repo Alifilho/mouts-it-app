@@ -2,7 +2,7 @@ type RequestOptions = {
   method: "GET" | "POST" | "PUT" | "DELETE";
   body?: unknown;
   params?: Record<string, string>;
-  noAuth?: boolean;
+  silent?: boolean;
 };
 
 export async function api<T>(
@@ -18,13 +18,14 @@ export async function api<T>(
     method,
     headers: { "Content-Type": "application/json" },
     body: body ? JSON.stringify(body) : undefined,
+    credentials: "include",
   });
 
   if (!res.ok) {
     const { message } = await res.json();
     const status = res.status;
 
-    if (status === 401 && !options.noAuth) {
+    if (status === 401 && !options.silent) {
       await fetch("/api/auth/logout", {
         method: "POST",
         credentials: "include",

@@ -26,7 +26,7 @@ export default function SignIn() {
   const { control, handleSubmit } = useForm<FormValues>();
   const { mutate, isPending } = useMutation({
     mutationFn: (body: FormValues) =>
-      api("auth/sign-in", { method: "POST", body, noAuth: true }),
+      api("auth/sign-in", { method: "POST", body, silent: true }),
   });
 
   const [showPassword, setShowPassword] = useState(false);

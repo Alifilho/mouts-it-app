@@ -49,7 +49,7 @@ export function SnackbarProvider({ children }: SnackbarProviderProps) {
     setAction(action);
     setType(type);
     setOpen(true);
-    setDuration(3000);
+    setDuration(_duration ?? 2000);
   }
 
   function onClose(_: unknown, reason?: SnackbarCloseReason) {
