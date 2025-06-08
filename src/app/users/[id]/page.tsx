@@ -1,5 +1,6 @@
 "use client";
 
+import { GoBack } from "@/components/go-back";
 import { Loading } from "@/components/loading";
 import { useSnackbar } from "@/hooks/use-snackbar";
 import { api } from "@/lib/api";
@@ -17,7 +18,6 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Link,
   Typography,
 } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -74,9 +74,7 @@ export default function UserDetail() {
 
   return (
     <Box>
-      <Link component={NextLink} href="/users" sx={{ mb: 2 }}>
-        <Typography>Go back</Typography>
-      </Link>
+      <GoBack />
       <Card sx={{ minWidth: 350 }}>
         <CardHeader title={`User Details - ${id}`} />
         <CardContent>

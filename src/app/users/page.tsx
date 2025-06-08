@@ -74,24 +74,18 @@ export default function UsersList() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>
-                <TableSortLabel>Id</TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel>Name</TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel>Email</TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel>Created at</TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel>Updated at</TableSortLabel>
-              </TableCell>
-              <TableCell>
-                <TableSortLabel>Is active</TableSortLabel>
-              </TableCell>
+              {[
+                "Id",
+                "Name",
+                "Email",
+                "Created at",
+                "Updated at",
+                "Is active",
+              ].map((header) => (
+                <TableCell key={header}>
+                  <TableSortLabel>{header}</TableSortLabel>
+                </TableCell>
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>

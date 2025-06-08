@@ -1,12 +1,12 @@
 "use client";
 
+import { GoBack } from "@/components/go-back";
 import { Loading } from "@/components/loading";
 import { useSnackbar } from "@/hooks/use-snackbar";
 import { api } from "@/lib/api";
 import { User } from "@/lib/types";
-import { Box, Link, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
-import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import UsersForm from "../_components/form";
 
@@ -41,9 +41,7 @@ export default function NewUser() {
 
   return (
     <Box>
-      <Link component={NextLink} href="/users" sx={{ mb: 2 }}>
-        <Typography>Go back</Typography>
-      </Link>
+      <GoBack />
       <UsersForm onSubmit={onSubmit} />
     </Box>
   );
