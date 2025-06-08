@@ -23,16 +23,16 @@ import {
 import { useQuery } from "@tanstack/react-query";
 import NextLink from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 
 export default function UsersList() {
   const theme = useTheme();
   const router = useRouter();
 
-  const [page] = useState(0);
-  const [take] = useState(25);
-  const [sortBy] = useState<keyof User>("createdAt");
-  const [order] = useState<"asc" | "desc">("desc");
+  const [page, setPage] = useState(0);
+  const [take, setTake] = useState(25);
+  const [sortBy, setSortBy] = useState<keyof User>("createdAt");
+  const [order, setOrder] = useState<"asc" | "desc">("desc");
 
   const { data, isLoading } = useQuery({
     queryKey: ["users", page, take, sortBy, order],
@@ -50,6 +50,20 @@ export default function UsersList() {
 
   function onRedirectToDetail(userId: number) {
     router.push(`/users/${userId}`);
+  }
+
+  function onChangePage(_: unknown, newPage: number) {
+    setPage(newPage);
+  }
+  function onChangeTake(event: ChangeEvent<HTMLInputElement>) {
+    setTake(Number.parseInt(event.target.value, 10));
+    setPage(0);
+  }
+  function onSort(property: keyof User) {
+    const isAsc = sortBy === property && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setSortBy(property);
+    setPage(0);
   }
 
   if (isLoading || !data) {
@@ -75,15 +89,21 @@ export default function UsersList() {
           <TableHead>
             <TableRow>
               {[
-                "Id",
-                "Name",
-                "Email",
-                "Created at",
-                "Updated at",
-                "Is active",
-              ].map((header) => (
-                <TableCell key={header}>
-                  <TableSortLabel>{header}</TableSortLabel>
+                { label: "Id", key: "id" as keyof User },
+                { label: "Name", key: "name" as keyof User },
+                { label: "Email", key: "email" as keyof User },
+                { label: "Created at", key: "createdAt" as keyof User },
+                { label: "Updated at", key: "updatedAt" as keyof User },
+                { label: "Is active", key: "isActive" as keyof User },
+              ].map((column) => (
+                <TableCell key={column.key}>
+                  <TableSortLabel
+                    active={sortBy === column.key}
+                    direction={sortBy === column.key ? order : "asc"}
+                    onClick={() => onSort(column.key)}
+                  >
+                    {column.label}
+                  </TableSortLabel>
                 </TableCell>
               ))}
             </TableRow>
@@ -121,8 +141,9 @@ export default function UsersList() {
                 count={data.total}
                 rowsPerPage={take}
                 page={page}
-                onPageChange={() => {}}
-                onRowsPerPageChange={() => {}}
+                rowsPerPageOptions={[-1, 10, 25, 50]}
+                onPageChange={onChangePage}
+                onRowsPerPageChange={onChangeTake}
               />
             </TableRow>
           </TableFooter>

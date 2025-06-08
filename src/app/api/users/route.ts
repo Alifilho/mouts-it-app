@@ -1,14 +1,21 @@
 import { getSession } from "@/lib/session";
 import { ApiErrorResponse } from "@/lib/types";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   const { accessToken } = await getSession();
   if (!accessToken) {
     return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
-  const res = await fetch(`${process.env.BASE_URL}/users`, {
+  const searchParams = request.nextUrl.searchParams;
+  const page = searchParams.get("page") || "0";
+  const take = searchParams.get("take") || "25";
+  const sortBy = searchParams.get("sortBy") || "createdAt";
+  const order = searchParams.get("order") || "desc";
+  const params = new URLSearchParams({ page, take, sortBy, order }).toString();
+
+  const res = await fetch(`${process.env.BASE_URL}/users?${params}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${accessToken}`,
