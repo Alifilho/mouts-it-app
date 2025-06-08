@@ -5,7 +5,6 @@ import { api } from "@/lib/api";
 import { ApiResponse, User } from "@/lib/types";
 import { Add, CheckBox, CheckBoxOutlineBlank } from "@mui/icons-material";
 import {
-  Box,
   IconButton,
   Paper,
   Table,
@@ -58,89 +57,83 @@ export default function UsersList() {
   }
 
   return (
-    <Box sx={{ maxWidth: "100%", padding: 5 }}>
-      <Paper>
-        <Toolbar
-          sx={{
-            bgcolor: theme.palette.primary.main,
-            color: theme.palette.primary.contrastText,
-            justifyContent: "space-between",
-          }}
-        >
-          <Typography variant="h6">Users</Typography>
-          <IconButton
-            LinkComponent={NextLink}
-            href="/users/new"
-            color="inherit"
-          >
-            <Add />
-          </IconButton>
-        </Toolbar>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
+    <Paper>
+      <Toolbar
+        sx={{
+          bgcolor: theme.palette.primary.main,
+          color: theme.palette.primary.contrastText,
+          justifyContent: "space-between",
+        }}
+      >
+        <Typography variant="h6">Users</Typography>
+        <IconButton LinkComponent={NextLink} href="/users/new" color="inherit">
+          <Add />
+        </IconButton>
+      </Toolbar>
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>
+                <TableSortLabel>Id</TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel>Name</TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel>Email</TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel>Created at</TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel>Updated at</TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel>Is active</TableSortLabel>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.items.map((user) => (
+              <TableRow
+                key={user.id}
+                onClick={() => onRedirectToDetail(user.id)}
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": { backgroundColor: theme.palette.action.hover },
+                }}
+              >
+                <TableCell>{user.id}</TableCell>
+                <TableCell>{user.name}</TableCell>
+                <TableCell>{user.email}</TableCell>
                 <TableCell>
-                  <TableSortLabel>Id</TableSortLabel>
+                  {new Date(user.createdAt).toLocaleDateString()}
                 </TableCell>
                 <TableCell>
-                  <TableSortLabel>Name</TableSortLabel>
+                  {new Date(user.updatedAt).toLocaleDateString()}
                 </TableCell>
                 <TableCell>
-                  <TableSortLabel>Email</TableSortLabel>
-                </TableCell>
-                <TableCell>
-                  <TableSortLabel>Created at</TableSortLabel>
-                </TableCell>
-                <TableCell>
-                  <TableSortLabel>Updated at</TableSortLabel>
-                </TableCell>
-                <TableCell>
-                  <TableSortLabel>Is active</TableSortLabel>
+                  {user.isActive ? <CheckBox /> : <CheckBoxOutlineBlank />}
                 </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.items.map((user) => (
-                <TableRow
-                  key={user.id}
-                  onClick={() => onRedirectToDetail(user.id)}
-                  sx={{
-                    cursor: "pointer",
-                    "&:hover": { backgroundColor: theme.palette.action.hover },
-                  }}
-                >
-                  <TableCell>{user.id}</TableCell>
-                  <TableCell>{user.name}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>
-                    {new Date(user.createdAt).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell>
-                    {new Date(user.updatedAt).toLocaleDateString()}
-                  </TableCell>
-                  <TableCell>
-                    {user.isActive ? <CheckBox /> : <CheckBoxOutlineBlank />}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  showFirstButton
-                  showLastButton
-                  count={data.total}
-                  rowsPerPage={take}
-                  page={page}
-                  onPageChange={() => {}}
-                  onRowsPerPageChange={() => {}}
-                />
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </Box>
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                showFirstButton
+                showLastButton
+                count={data.total}
+                rowsPerPage={take}
+                page={page}
+                onPageChange={() => {}}
+                onRowsPerPageChange={() => {}}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </Paper>
   );
 }

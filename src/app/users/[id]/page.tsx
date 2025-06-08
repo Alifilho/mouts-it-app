@@ -23,7 +23,18 @@ import {
 import { useMutation, useQuery } from "@tanstack/react-query";
 import NextLink from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
+
+function CardDetails({ title, value }: { title: string; value: ReactNode }) {
+  return (
+    <>
+      <Typography gutterBottom sx={{ color: "text.secondary", fontSize: 14 }}>
+        {title}
+      </Typography>
+      <Typography sx={{ mb: 1.5 }}>{value}</Typography>
+    </>
+  );
+}
 
 export default function UserDetail() {
   const { id } = useParams();
@@ -62,61 +73,27 @@ export default function UserDetail() {
   }
 
   return (
-    <Box
-      sx={{
-        maxWidth: "100%",
-        padding: 5,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <Box>
       <Link component={NextLink} href="/users" sx={{ mb: 2 }}>
         <Typography>Go back</Typography>
       </Link>
       <Card sx={{ minWidth: 350 }}>
         <CardHeader title={`User Details - ${id}`} />
         <CardContent>
-          <Typography
-            gutterBottom
-            sx={{ color: "text.secondary", fontSize: 14 }}
-          >
-            Name
-          </Typography>
-          <Typography sx={{ mb: 1.5 }}>{data.name}</Typography>
-          <Typography
-            gutterBottom
-            sx={{ color: "text.secondary", fontSize: 14 }}
-          >
-            Email
-          </Typography>
-          <Typography sx={{ mb: 1.5 }}>{data.email}</Typography>
-          <Typography
-            gutterBottom
-            sx={{ color: "text.secondary", fontSize: 14 }}
-          >
-            Created at
-          </Typography>
-          <Typography sx={{ mb: 1.5 }}>
-            {new Date(data.createdAt).toLocaleDateString()}
-          </Typography>
-          <Typography
-            gutterBottom
-            sx={{ color: "text.secondary", fontSize: 14 }}
-          >
-            Updated at
-          </Typography>
-          <Typography sx={{ mb: 1.5 }}>
-            {new Date(data.updatedAt).toLocaleDateString()}
-          </Typography>
-          <Typography
-            gutterBottom
-            sx={{ color: "text.secondary", fontSize: 14 }}
-          >
-            Is active
-          </Typography>
-          {data.isActive ? <CheckBox /> : <CheckBoxOutlineBlank />}
+          <CardDetails title="Name" value={data.name} />
+          <CardDetails title="Email" value={data.email} />
+          <CardDetails
+            title="Created at"
+            value={new Date(data.createdAt).toLocaleDateString()}
+          />
+          <CardDetails
+            title="Updated at"
+            value={new Date(data.updatedAt).toLocaleDateString()}
+          />
+          <CardDetails
+            title="Is active"
+            value={data.isActive ? <CheckBox /> : <CheckBoxOutlineBlank />}
+          />
         </CardContent>
         <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
           <Button size="small" onClick={onOpenDeleteModal}>

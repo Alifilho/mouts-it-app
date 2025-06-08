@@ -45,16 +45,7 @@ export default function EditUser() {
   }
 
   return (
-    <Box
-      sx={{
-        maxWidth: "100%",
-        padding: 5,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <Box>
       <Link component={NextLink} href="/users" sx={{ mb: 2 }}>
         <Typography>Go back</Typography>
       </Link>

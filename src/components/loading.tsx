@@ -8,7 +8,7 @@ export function Loading() {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
-        height: "100%",
+        height: "75vh",
       }}
     >
       <CircularProgress size={60} thickness={4} />
