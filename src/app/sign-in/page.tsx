@@ -55,11 +55,12 @@ export default function SignIn() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "100%",
+        height: "90%",
+        padding: 5,
       }}
     >
       <Paper
-        elevation={3}
+        elevation={1}
         sx={{ padding: 2 }}
         component="form"
         onSubmit={handleSubmit(onSubmit)}

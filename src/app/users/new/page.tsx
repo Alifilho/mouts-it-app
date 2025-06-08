@@ -5,7 +5,7 @@ import { Loading } from "@/components/loading";
 import { useSnackbar } from "@/hooks/use-snackbar";
 import { api } from "@/lib/api";
 import { User } from "@/lib/types";
-import { Box } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import UsersForm from "../_components/form";
@@ -42,7 +42,12 @@ export default function NewUser() {
   return (
     <Box>
       <GoBack />
-      <UsersForm onSubmit={onSubmit} />
+      <Paper elevation={1} sx={{ padding: 2 }}>
+        <Typography variant="h5" gutterBottom sx={{ mb: 4 }}>
+          New User
+        </Typography>
+        <UsersForm onSubmit={onSubmit} />
+      </Paper>
     </Box>
   );
 }

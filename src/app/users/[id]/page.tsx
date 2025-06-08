@@ -94,14 +94,13 @@ export default function UserDetail() {
           />
         </CardContent>
         <CardActions sx={{ display: "flex", justifyContent: "flex-end" }}>
-          <Button size="small" onClick={onOpenDeleteModal}>
+          <Button onClick={onOpenDeleteModal} variant="outlined">
             Delete
           </Button>
           <Button
             LinkComponent={NextLink}
             href={`/users/${id}/edit`}
             variant="contained"
-            size="small"
           >
             Edit
           </Button>
