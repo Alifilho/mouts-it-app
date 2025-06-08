@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Mouts IT App
 
-## Getting Started
+## Table of Contents
 
-First, run the development server:
+1. [Installation](#installation)  
+2. [Environment Variables](#environment-variables)
+3. [Running the App](#usage)  
+4. [API Reference](#api-reference)
+5. [Default Credentials](#default-credentials)
+6. [Commits](#commits)
+7. [Contact/Support](#contact--support)  
+
+## Installation
+
+1. Clone the repo  
+   ```bash
+   git clone <your-repo-url> && cd mouts-it-app
+   ```  
+2. Install dependencies  
+   ```bash
+   npm install
+   ```
+
+By default, the app is listening an api in port `3001`. You can change this via an environment variable in api project.
+
+## Environment Variables
+
+- `SESSION_SECRET` — iron session secret key  
+- `COOKIE_NAME` — cookie name
+- `BASE_URL` — base url for backend mouts-it api
+
+Create a `.env` in the project root and define:
+
+```bash
+  cp .example.env .env
+```
+
+## Running the App
+
+Start the app in development mode:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## API Reference
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The complete API reference is automatically generated with Swagger and available at `http://localhost:3001/docs`. Use this interactive UI to explore endpoints, view request/response schemas, and try out calls directly.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Default Credentials
+In API by default, the user is:  
+- **Email:** admin@mouts.com  
+- **Password:** 12345
 
-## Learn More
+## Commits
 
-To learn more about Next.js, take a look at the following resources:
+This repository follows the [Conventional Commits](https://www.conventionalcommits.org/) specification to maintain a clear, structured commit history.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contact / Support
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For questions, bug reports, or help, please reach out to the maintainer at alissonoliveiram@gmail.com.
